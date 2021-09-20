@@ -69,23 +69,23 @@ class MainActivity : AppCompatActivity() {
 
         binding.btnUpload.setOnClickListener {
             getStringImage(decoded)
-            Log.d("result:::", image)
-//            name = binding.etNama.text.toString()
-//            if(name.isEmpty() || binding.imgUpload.drawable == null){
-//                Toast.makeText(
-//                    applicationContext,
-//                    "isi nama atau upload photo dahulu",
-//                    Toast.LENGTH_SHORT
-//                ).show()
-//            } else {
-//                val request = UploadModel(name, image)
-//                viewModel.insertImage(request)
-//                viewModel.myResponse.observe(this, Observer { response ->
-//                    if(response.isSuccessful){
-//                        response.body()?.let { it1 -> Log.d("Response::", it1.message) }
-//                    }
-//                })
-//            }
+//            Log.d("result:::", image)
+            name = binding.etNama.text.toString()
+            if(name.isEmpty() || binding.imgUpload.drawable == null){
+                Toast.makeText(
+                    applicationContext,
+                    "isi nama atau upload photo dahulu",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                val request = UploadModel(name, image)
+                viewModel.insertImage(request)
+                viewModel.myResponse.observe(this, Observer { response ->
+                    if(response.isSuccessful){
+                        response.body()?.let { it1 -> Log.d("Response::", it1.message) }
+                    }
+                })
+            }
         }
     }
 
