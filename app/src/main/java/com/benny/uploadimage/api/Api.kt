@@ -7,7 +7,7 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface Api {
-    @POST
+    @POST("upload.php")
     suspend fun uploadImage(
         @Body request: UploadModel
     ): Response<ServerResponse>
