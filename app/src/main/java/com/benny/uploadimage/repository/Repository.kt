@@ -6,7 +6,7 @@ import com.benny.uploadimage.model.UploadModel
 import retrofit2.Response
 
 class Repository {
-    suspend fun insertImage(request: UploadModel): Response<ServerResponse>{
-        return RetrofitInstance.api.uploadImage(request)
+    suspend fun insertImage(nama: String, images: String): Response<ServerResponse>{
+        return RetrofitInstance.api.uploadImage(nama, images)
     }
 }

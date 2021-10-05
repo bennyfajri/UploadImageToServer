@@ -13,9 +13,9 @@ class ViewModels(private val repository: Repository) : ViewModel(){
 
     val myResponse: MutableLiveData<Response<ServerResponse>> = MutableLiveData()
 
-    fun insertImage(request: UploadModel){
+    fun insertImage(name: String, image: String){
         viewModelScope.launch {
-            val response = repository.insertImage(request)
+            val response = repository.insertImage(name, image)
             myResponse.value = response
         }
     }

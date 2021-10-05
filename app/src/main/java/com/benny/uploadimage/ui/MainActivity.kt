@@ -3,7 +3,6 @@ package com.benny.uploadimage.ui
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -33,7 +32,6 @@ class MainActivity : AppCompatActivity() {
     lateinit var image: String
     lateinit var name: String
     lateinit var viewModel: ViewModels
-    val PICK_IMAGE_REQUEST = 1
     val bitmap_size = 60
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,7 +67,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.btnUpload.setOnClickListener {
             getStringImage(decoded)
-//            Log.d("result:::", image)
+            Log.d("result:::", image.toString())
             name = binding.etNama.text.toString()
             if(name.isEmpty() || binding.imgUpload.drawable == null){
                 Toast.makeText(
@@ -79,10 +77,10 @@ class MainActivity : AppCompatActivity() {
                 ).show()
             } else {
                 val request = UploadModel(name, image)
-                viewModel.insertImage(request)
+                viewModel.insertImage(name, image)
                 viewModel.myResponse.observe(this, Observer { response ->
                     if(response.isSuccessful){
-                        response.body()?.let { it1 -> Log.d("Response::", it1.message) }
+                        Toast.makeText(applicationContext, response.body()?.message, Toast.LENGTH_SHORT).show()
                     }
                 })
             }
@@ -119,7 +117,7 @@ class MainActivity : AppCompatActivity() {
     private fun setToImageView(bmp: Bitmap) {
         //compress image
         val bytes = ByteArrayOutputStream()
-        bmp.compress(Bitmap.CompressFormat.JPEG, bitmap_size, bytes)
+        bmp.compress(Bitmap.CompressFormat.PNG, bitmap_size, bytes)
         decoded = BitmapFactory.decodeStream(ByteArrayInputStream(bytes.toByteArray()))
 
 
