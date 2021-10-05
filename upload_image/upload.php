@@ -1,15 +1,11 @@
 <?php
-    if($_SERVER['REQUEST_METHOD'] == 'POST'){ 
         include_once("dbconnect.php");   
         class emp{}
 
-        $postdata = file_get_contents("php://input");
-        if(isset($postdata)){
-            $request1 = json_decode("$postdata");
-            $name = $request1->name;
-            $image = $request1->image;
+        $name = $_POST['name'];
+        $image = $_POST['image'];
 
-            if(isset($name)){
+            if(!isset($name)){
                 $response = new emp();
                 $response->success = 0;
                 $response->message = "Please name not empty";
@@ -18,7 +14,7 @@
 
                 $path = "images/".$random.".jpg";
 
-                $query = mysqli_query($conn, "INSERT INTO tb_photo (name, photo) VALUES ('$name','$actualpath')");
+                $query = mysqli_query($conn, "INSERT INTO tb_photo (name, photo) VALUES ('$name','$path')");
                 if($query){
                     file_put_contents($path, base64_decode($image));
 
@@ -34,9 +30,7 @@
                 }
 
                 mysqli_close($conn);
-            }
-        }    
-}
+            } 
 
            // fungsi random string pada gambar untuk menghindari nama file yang sama
            function random_word($id = 20){
